@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import NextAuth, { AuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
-const authOptions: AuthOptions = {
+export const authOptions: AuthOptions = { 
     providers: [
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID as string,
@@ -17,6 +17,11 @@ const authOptions: AuthOptions = {
       maxAge: 24 * 60 * 60,  
     },
     secret: process.env.NEXTAUTH_SECRET as string,
+    callbacks: {
+      async jwt({token}) {
+        return token
+      }
+    }
 }
 type CombineRequest = Request & NextApiRequest;
 type CombineResponse = Response & NextApiResponse;
