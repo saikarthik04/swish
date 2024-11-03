@@ -1,14 +1,9 @@
-"use server"
-import { Suspense } from "react";
-import Dashboard from "./customComponents/dashboard";
-import Loading from "./customComponents/loading";
+import Dashboard from "./customComponents/clientComponents/dashboard";
 
 const Main = async () => {
   return(
     <>
-    <Suspense fallback={<Loading/>}>
     <Dashboard/>
-    </Suspense>
     </>
   )
 }

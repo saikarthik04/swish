@@ -1,7 +1,7 @@
 "use client"
 import React from "react";
 import Image from "next/image";
-import ThemeToggle from "./theme-toggle";
+import ThemeToggle from "@/app/customComponents/clientComponents/theme-toggle";
 import { FaUserCircle } from "react-icons/fa";
 import { signOut, useSession } from "next-auth/react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
@@ -31,15 +31,19 @@ const Navbar = () => {
       )}
       <div className=" flex flex-row md:justify-evenly gap-6">
       <DropdownMenu>
-            <DropdownMenuTrigger> <FaUserCircle className="h-8 w-8"/></DropdownMenuTrigger>
+            <DropdownMenuTrigger>
+              {data?.user!=null ? (
+                <Image src={data.user.image || ''} alt="user-profile"  width={32} height={32} className="rounded-full"/>
+              ) :(
+               <FaUserCircle className="h-8 w-8"/>)}</DropdownMenuTrigger>
             <DropdownMenuContent>
             {data?.user != null ? (
               <>
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem> <User/> Profile</DropdownMenuItem>
+             <Link href="profile"><DropdownMenuItem> <User/> Profile</DropdownMenuItem></Link> 
               <DropdownMenuItem> <CreditCard/> Billing</DropdownMenuItem>
-              <DropdownMenuItem><LucideClipboardList/> Listings</DropdownMenuItem>
+              <Link href="listings"><DropdownMenuItem><LucideClipboardList/> Listings</DropdownMenuItem></Link>
               <DropdownMenuItem className="text-red-500" onClick={()=>signOut()}><LogOut/>   Logout</DropdownMenuItem>
               </>
             ): (<Link href="login"> <DropdownMenuItem>Login</DropdownMenuItem></Link>)}
